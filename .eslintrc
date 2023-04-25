@@ -9,7 +9,6 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
-    "avoidEscape": true,
     "allowTemplateLiterals": true,
     "no-console": "warn",
     "prettier/prettier": [
