@@ -1,4 +1,4 @@
-import mongoose, { model } from 'mongoose';
+import { model, Schema } from 'mongoose';
 import {
   IClasses,
   ICourses,
@@ -9,59 +9,123 @@ import {
 } from '../types/SchemaTypes';
 import bcrypt from 'bcryptjs';
 
-const { Schema } = mongoose;
+const UserSchema = new Schema<IUser>(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      // select: false,
+    },
+    role: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true },
+);
 
-const UserSchema = new Schema<IUser>({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
+const StudentSchema = new Schema<IStudent>(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    age: {
+      type: String,
+      required: true,
+    },
+    gender: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-    select: false,
+  { timestamps: true },
+);
+const ClassesSchemas = new Schema<IClasses>({
+  id_students: {
+    type: Schema.Types.ObjectId,
+    ref: 'Students',
   },
-  role: {
-    type: String,
-    required: true,
-  },
-  created_at: {
+  start_date: {
     type: Date,
-    default: Date.now,
+    required: true,
+  },
+  end_date: {
+    type: Date,
+    required: true,
   },
 });
 
-const StudentSchema = new Schema<IStudent>({
+const CoursesSchema = new Schema<ICourses>({
+  id_class: {
+    type: Schema.Types.ObjectId,
+    ref: 'Classes',
+  },
   name: {
     type: String,
     required: true,
   },
-  age: {
+  description: {
     type: String,
-    required: true,
-  },
-  gender: {
-    type: String,
-    required: true,
   },
 });
 
-UserSchema.pre('save', async next => {
-  const hash = await bcrypt.hash(this.password, 10);
-  this.password = hash;
+const FrequencySchemas = new Schema<IFrequency>({
+  id_class: {
+    type: Schema.Types.ObjectId,
+    ref: 'Classes',
+  },
+  id_student: {
+    type: Schema.Types.ObjectId,
+    ref: 'Student',
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  status: {
+    type: String,
+    enum: ['Presente', 'Ausente'],
+  },
+  details_status: {
+    type: String,
+  },
+});
 
+const FinanceSchemas = new Schema<IFincances>({
+  id_student: {
+    type: Schema.Types.ObjectId,
+    ref: 'Student',
+  },
+  id_course: {
+    type: Schema.Types.ObjectId,
+    ref: 'Courses',
+  },
+  number_classes: {},
+  status_register: {
+    type: String,
+    enum: ['Aberto', 'Fechado', 'Cancelado'],
+    default: 'Aberto',
+  },
+  type_register: {
+    type: String,
+    enum: ['Entrada', 'Saída'],
+  },
+});
+
+UserSchema.pre('save', async function hash(next) {
+  this.password = await bcrypt.hash(this.password, 12);
   next();
 });
-
-const CoursesSchema = new Schema<ICourses>({});
-
-const ClassesSchemas = new Schema<IClasses>({});
-
-const FrequencySchemas = new Schema<IFrequency>({});
-
-const FinanceSchemas = new Schema<IFincances>({});
 
 const User = model<IUser>('User', UserSchema);
 const Student = model<IStudent>('Student', StudentSchema);

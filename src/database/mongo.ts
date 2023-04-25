@@ -1,11 +1,17 @@
 import { connect } from 'mongoose';
+import * as env from 'dotenv';
+
+env.config();
+const url = process.env.CONNECTION_MONGODB || '';
 
 async function connection() {
-  const mongo = await connect('mongodb://127.0.0.1:27017/test').catch(err =>
-    console.error(err),
-  );
+  try {
+    const mongo = await connect(url).catch(err => console.error(err));
 
-  return mongo;
+    return mongo;
+  } catch (err) {
+    console.error(`Error ${err}`);
+  }
 }
 
 export default connection;

@@ -4,4 +4,9 @@ interface CreateUser {
   role: string;
 }
 
-export { CreateUser };
+interface UserAuth {
+  email: string;
+  password: string;
+}
+
+export { CreateUser, UserAuth };

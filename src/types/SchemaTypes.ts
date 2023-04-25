@@ -9,20 +9,35 @@ interface IStudent {
   name: string;
   age: string;
   gender: string;
+  phone: string;
 }
 
 interface ICourses {
   name: string;
-  class: IClasses;
-  duration: string;
+  id_class: IClasses;
+  description?: string;
 }
 
 interface IClasses {
-  students: IUser[];
+  id_students: IUser;
+  start_date: Date;
+  end_date: Date;
 }
 
-interface IFrequency {}
+interface IFrequency {
+  id_class: IClasses;
+  id_student: IStudent;
+  date: Date;
+  status: string; //Presente,Ausente
+  details_status?: string; //<- Caso seja “Ausente”, sera necessário de informar se a ausência eh justificada.
+}
 
-interface IFincances {}
+interface IFincances {
+  id_student: IStudent;
+  id_course: ICourses;
+  status_register: string; //Aberto, Fechado e Cancelado
+  type_register: string; //Entrada ou saida
+  number_classes: string;
+}
 
 export { IClasses, IFincances, IStudent, IUser, IFrequency, ICourses };
