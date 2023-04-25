@@ -1,13 +1,16 @@
 import express from 'express';
 import cors from 'cors';
 import router from '../routes';
+import connection from '../database/mongo';
 
 export class App {
   public server: express.Application;
 
   constructor() {
     this.server = express();
+    this.connectMongo();
     this.middlewares();
+    this.routes();
   }
 
   private middlewares() {
@@ -16,7 +19,11 @@ export class App {
   }
 
   private routes() {
-    this.server.use(router)
+    this.server.use(router);
+  }
+
+  private async connectMongo() {
+    await connection();
   }
 }
 
