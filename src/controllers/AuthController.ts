@@ -41,7 +41,7 @@ class AuthController {
       secret,
     );
 
-    return token;
+    return { token, email };
   }
 }
 
