@@ -6,7 +6,7 @@ import {
   IFrequency,
   IStudent,
   IUser,
-} from '../types/SchemaTypes';
+} from '../../types/SchemaTypes';
 import bcrypt from 'bcryptjs';
 
 const UserSchema = new Schema<IUser>(

@@ -1,4 +1,4 @@
-import { User } from '../models';
+import { User } from '../database/schemas';
 import { CreateUser, UserAuth } from '../types';
 import bcrypt from 'bcryptjs';
 import * as env from 'dotenv';
