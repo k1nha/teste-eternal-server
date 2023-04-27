@@ -3,6 +3,7 @@ import cors from 'cors';
 import router from '../routes/router';
 import connection from '../database/mongo';
 import * as env from 'dotenv';
+import morgan from 'morgan';
 
 env.config();
 
@@ -18,12 +19,8 @@ export class App {
 
   private middlewares() {
     this.server.use(express.json());
-    this.server.use(
-      cors({
-        origin: '*',
-        credentials: true,
-      }),
-    );
+    this.server.use(cors({ origin: '*', credentials: true }));
+    this.server.use(morgan('dev'));
   }
 
   private routes() {

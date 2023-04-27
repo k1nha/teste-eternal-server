@@ -17,4 +17,8 @@ class ClassesController {
       return res.status(500).json({ error: err });
     }
   }
+
+  async create(req: Request, res: Response) {}
 }
+
+export default ClassesController;

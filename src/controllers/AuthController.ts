@@ -1,48 +1,44 @@
-import { User } from '../database/schemas';
-import { CreateUser, UserAuth } from '../types';
-import bcrypt from 'bcryptjs';
-import * as env from 'dotenv';
-import jwt from 'jsonwebtoken';
+import { Request, Response } from 'express';
+import AuthModel from '../models/AuthModel';
 
-env.config();
+const makeSut = () => {
+  return new AuthModel();
+};
 
 // TODO: REFACTOR THIS
 class AuthController {
-  async create(body: CreateUser) {
-    const { email } = body;
+  async create(req: Request, res: Response) {
+    try {
+      const body = req.body;
 
-    if (await User.findOne({ email })) {
-      return 'User already exists';
+      const login = await makeSut().createUser(body);
+
+      if (login == 'User already exists') {
+        return res.status(400).json({ message: 'User already exists' });
+      }
+
+      return res.status(201).json({ message: login });
+    } catch (err) {
+      return res.status(500).json({ error: err });
     }
-
-    const user = await User.create(body);
-
-    return user;
   }
 
-  async getLogin(body: UserAuth) {
-    const { email, password } = body;
+  async getLogin(req: Request, res: Response) {
+    try {
+      const body = req.body;
 
-    const user = await User.findOne({ email: email });
+      const login = await makeSut().getLogin(body);
 
-    if (!user) {
-      return 'Users not found';
+      if (login == 'Users not found')
+        return res.status(404).json({ message: 'User not found' });
+
+      if (login == 'Invalid Password')
+        return res.status(400).json({ message: 'Invalid Password' });
+
+      return res.status(200).json({ message: login });
+    } catch (err) {
+      return res.status(500).json({ error: err });
     }
-    const checkedPassword = await bcrypt.compare(password, user.password);
-
-    if (!checkedPassword) {
-      return 'Invalid Password';
-    }
-
-    const secret = process.env.SECRET_KEY || '';
-    const token = jwt.sign(
-      {
-        id: user.id,
-      },
-      secret,
-    );
-
-    return { token, email };
   }
 }
 

@@ -43,6 +43,7 @@ const StudentSchema = new Schema<IStudent>(
     gender: {
       type: String,
       required: true,
+      enum: ['Masculino', 'Feminino'],
     },
     phone: {
       type: String,
