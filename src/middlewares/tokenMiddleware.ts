@@ -15,8 +15,9 @@ function checkToken(req: Request, res: Response, next: NextFunction) {
   try {
     const secret = process.env.SECRET_KEY || '';
 
-    jwt.verify(token, secret);
+    const verify = jwt.verify(token, secret);
 
+    return res.status(200).json(verify);
     next();
   } catch (err) {
     res.status(400).json({ message: 'Invalid token' });

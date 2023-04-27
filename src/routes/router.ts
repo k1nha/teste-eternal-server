@@ -17,9 +17,7 @@ router.post('/auth/user', async (req: Request, res: Response) => {
   res.status(200).json({ message: userAuth });
 });
 
-router.get('/auth/verify', checkToken, async (req: Request, res: Response) => {
-  res.status(200).json({ message: 'ok' });
-});
+router.get('/auth/verify', checkToken);
 
 // Students
 

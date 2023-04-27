@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 
 env.config();
 
+// TODO: REFACTOR THIS
 class AuthController {
   async create(body: CreateUser) {
     const { email } = body;
