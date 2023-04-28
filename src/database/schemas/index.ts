@@ -62,15 +62,18 @@ const ClassesSchemas = new Schema<IClasses>({
   },
   end_date: {
     type: Date,
+  },
+  id_course: {
+    type: Schema.Types.ObjectId,
+    ref: 'Courses',
+  },
+  id_classes: {
+    type: Number,
     required: true,
   },
 });
 
 const CoursesSchema = new Schema<ICourses>({
-  id_class: {
-    type: Schema.Types.ObjectId,
-    ref: 'Classes',
-  },
   name: {
     type: String,
     required: true,
@@ -81,7 +84,7 @@ const CoursesSchema = new Schema<ICourses>({
 });
 
 const FrequencySchemas = new Schema<IFrequency>({
-  id_class: {
+  id_classes: {
     type: Schema.Types.ObjectId,
     ref: 'Classes',
   },
@@ -107,19 +110,26 @@ const FinanceSchemas = new Schema<IFincances>({
     type: Schema.Types.ObjectId,
     ref: 'Student',
   },
-  id_course: {
+  id_classes: {
     type: Schema.Types.ObjectId,
-    ref: 'Courses',
+    ref: 'Classes',
   },
-  number_classes: {},
-  status_register: {
+  payment_date: {
+    type: Date,
+    default: Date.now,
+  },
+  payment_status: {
     type: String,
     enum: ['Aberto', 'Fechado', 'Cancelado'],
     default: 'Aberto',
   },
-  type_register: {
+  payment_type: {
     type: String,
     enum: ['Entrada', 'Saída'],
+  },
+  payment_amount: {
+    type: Number,
+    required: true,
   },
 });
 

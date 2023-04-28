@@ -20,9 +20,14 @@ class ClassesModel {
     }
   }
 
-  async updateClasses(data: IClasses) {
+  async updateClasses(data: IClasses, id: string) {
     try {
-      const updateStudent = await Classes.updateOne(data);
+      const updateStudent = await Classes.updateOne(
+        {
+          _id: id,
+        },
+        data,
+      );
 
       return updateStudent;
     } catch (err) {
@@ -30,7 +35,7 @@ class ClassesModel {
     }
   }
 
-  async deleteClasses() {
+  async deleteClasses(id: string) {
     // Classes só podem ser deletadas se não possuirem frequência.
   }
 }

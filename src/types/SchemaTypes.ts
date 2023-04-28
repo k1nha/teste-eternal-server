@@ -14,18 +14,19 @@ interface IStudent {
 
 interface ICourses {
   name: string;
-  id_class: IClasses;
   description?: string;
 }
 
 interface IClasses {
-  id_students: IUser;
+  id_classes: number;
+  id_students: IStudent;
+  id_course: ICourses;
   start_date: Date;
   end_date: Date;
 }
 
 interface IFrequency {
-  id_class: IClasses;
+  id_classes: IClasses;
   id_student: IStudent;
   date: Date;
   status: string; //Presente,Ausente
@@ -34,10 +35,11 @@ interface IFrequency {
 
 interface IFincances {
   id_student: IStudent;
-  id_course: ICourses;
-  status_register: string; //Aberto, Fechado e Cancelado
-  type_register: string; //Entrada ou saida
-  number_classes: string;
+  id_classes: IClasses;
+  payment_status: string; //Aberto, Fechado e Cancelado
+  payment_type: string; //Entrada ou saida
+  payment_date: Date;
+  payment_amount: number;
 }
 
 export { IClasses, IFincances, IStudent, IUser, IFrequency, ICourses };

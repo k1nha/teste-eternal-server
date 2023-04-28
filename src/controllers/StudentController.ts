@@ -34,9 +34,10 @@ class StudentController {
 
   async update(req: Request, res: Response) {
     try {
+      const params = req.params.id;
       const body = req.body;
 
-      const updateStudent = await makeSut().updateStudent(body);
+      const updateStudent = await makeSut().updateStudent(body, params);
 
       if (updateStudent?.modifiedCount === 0) {
         throw new Error('Unable to update student, error occord');

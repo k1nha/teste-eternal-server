@@ -22,9 +22,14 @@ class CoursesModel {
     }
   }
 
-  static async updateCourses(data: ICourses) {
+  static async updateCourses(data: ICourses, id: string) {
     try {
-      const updatedCourse = await Courses.findOneAndUpdate(data);
+      const updatedCourse = await Courses.findOneAndUpdate(
+        {
+          _id: id,
+        },
+        data,
+      );
 
       return updatedCourse;
     } catch (err) {

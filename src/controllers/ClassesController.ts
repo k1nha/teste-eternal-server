@@ -18,7 +18,47 @@ class ClassesController {
     }
   }
 
-  async create(req: Request, res: Response) {}
+  async create(req: Request, res: Response) {
+    try {
+      const body = req.body;
+
+      const createdClasses = await makeSut().createClasses(body);
+
+      return res.status(201).json({ message: createdClasses });
+    } catch (err) {
+      return res.status(500).json({ error: err });
+    }
+  }
+
+  async update(req: Request, res: Response) {
+    try {
+      const params = req.params.id;
+      const body = req.body;
+
+      const updatedClasses = await makeSut().updateClasses(body, params);
+
+      if (updatedClasses?.modifiedCount === 0) {
+        throw new Error('Unable to update classes, error occord');
+      }
+
+      return res.status(201).json({ message: updatedClasses });
+    } catch (err) {
+      return res.status(500).json({ error: err });
+    }
+  }
+
+  // TODO: Model
+  async delete(req: Request, res: Response) {
+    try {
+      const id = req.params.id;
+
+      const deleteClasses = await makeSut().deleteClasses(id);
+
+      return deleteClasses;
+    } catch (err) {
+      return res.status(500).json({ error: err });
+    }
+  }
 }
 
 export default ClassesController;

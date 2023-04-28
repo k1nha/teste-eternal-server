@@ -9,7 +9,7 @@ class StudentModel {
       const allStudents = await Student.find();
       return allStudents;
     } catch (err) {
-      console.error(`${err}`);
+      console.error(err);
     }
   }
 
@@ -34,9 +34,14 @@ class StudentModel {
     }
   }
 
-  async updateStudent(data: IStudent) {
+  async updateStudent(data: IStudent, id: string) {
     try {
-      const updateStudent = await Student.updateOne(data);
+      const updateStudent = await Student.updateOne(
+        {
+          _id: id,
+        },
+        data,
+      );
 
       return updateStudent;
     } catch (err) {
