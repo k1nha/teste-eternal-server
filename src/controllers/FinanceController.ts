@@ -20,3 +20,5 @@ class FinanceController {
     }
   }
 }
+
+export default FinanceController;

@@ -10,9 +10,8 @@ class StudentController {
     try {
       const students = await makeSut().getAllStudents();
 
-      if (!students) {
+      if (!students)
         return res.status(404).json({ message: 'Students not found' });
-      }
 
       return res.status(200).send(students);
     } catch (err) {
@@ -39,11 +38,10 @@ class StudentController {
 
       const updateStudent = await makeSut().updateStudent(body, params);
 
-      if (updateStudent?.modifiedCount === 0) {
+      if (updateStudent?.modifiedCount === 0)
         throw new Error('Unable to update student, error occord');
-      }
 
-      return res.json(updateStudent);
+      return res.status(200).json(updateStudent);
     } catch (err) {
       return res.status(500).json({ error: err });
     }
@@ -55,7 +53,7 @@ class StudentController {
 
       const deleteStudent = await makeSut().deleteStudent(id);
 
-      return res.json(deleteStudent);
+      return res.status(200).json(deleteStudent);
     } catch (err) {
       return res.status(500).json({ error: err });
     }

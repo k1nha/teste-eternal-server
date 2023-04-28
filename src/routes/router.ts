@@ -3,11 +3,17 @@ import AuthController from '../controllers/AuthController';
 import checkToken from '../middlewares/tokenMiddleware';
 import ClassesController from '../controllers/ClassesController';
 import StudentController from '../controllers/StudentController';
+import FinanceController from '../controllers/FinanceController';
+import CoursesController from '../controllers/CoursesController';
+import FrequencyController from '../controllers/FrequencyController';
 
 const router = Router();
 const Auth = new AuthController();
 const Student = new StudentController();
 const Classes = new ClassesController();
+const Courses = new CoursesController();
+const Finances = new FinanceController();
+const Frequency = new FrequencyController();
 
 // User
 router.post('/auth/register', Auth.create);
@@ -32,22 +38,38 @@ router.get('/api/classes', Classes.getAll);
 
 router.post('/api/classes', Classes.create);
 
+router.put('/api/classes/:id', Classes.update);
+
+router.delete('/api/classes/:id', Classes.delete);
+
 // Courses
 
-router.get('/api/courses');
+router.get('/api/courses', Courses.getAll);
 
-router.post('/api/courses');
+router.post('/api/courses', Courses.create);
+
+router.put('/api/courses/:id', Courses.update);
+
+router.delete('/api/courses/:id', Courses.delete);
 
 // Frequency
 
-router.get('/api/frequency');
+router.get('/api/frequency', Frequency.getAll);
 
-router.post('/api/frequency');
+router.post('/api/frequency', Frequency.create);
+
+router.put('/api/frequency', Frequency.update);
+
+router.delete('/api/frequency', Frequency.delete);
 
 // Finances
 
-router.get('/api/finances');
+router.get('/api/finances', Finances.getAll);
 
 router.post('/api/finances');
+
+router.put('/api/finances');
+
+router.delete('/api/finances');
 
 export default router;

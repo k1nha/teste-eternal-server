@@ -2,7 +2,7 @@ import { Courses } from '../database/schemas';
 import { ICourses } from '../types/SchemaTypes';
 
 class CoursesModel {
-  static async getAllCourses() {
+  async getAllCourses() {
     try {
       const courses = await Courses.find();
 
@@ -12,7 +12,7 @@ class CoursesModel {
     }
   }
 
-  static async createCourses(body: ICourses) {
+  async createCourses(body: ICourses) {
     try {
       const createdCourse = await Courses.create(body);
 
@@ -22,9 +22,9 @@ class CoursesModel {
     }
   }
 
-  static async updateCourses(data: ICourses, id: string) {
+  async updateCourses(data: ICourses, id: string) {
     try {
-      const updatedCourse = await Courses.findOneAndUpdate(
+      const updatedCourse = await Courses.updateOne(
         {
           _id: id,
         },
@@ -37,7 +37,7 @@ class CoursesModel {
     }
   }
 
-  static async deleteCourses(id: string) {
+  async deleteCourses(id: string) {
     try {
       const deletedResponse = await Courses.findOneAndDelete({
         _id: id,
