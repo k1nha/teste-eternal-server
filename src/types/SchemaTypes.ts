@@ -18,28 +18,39 @@ interface ICourses {
 }
 
 interface IClasses {
-  id_classes: number;
-  id_students: IStudent;
   id_course: ICourses;
+  name: string;
   start_date: Date;
-  end_date: Date;
+  end_date?: Date;
+}
+
+interface IClassesStudents {
+  id_classes: IClasses;
+  id_student: IStudent;
+  amount_class: number;
 }
 
 interface IFrequency {
-  id_classes: IClasses;
-  id_student: IStudent;
+  id_Classes_Students: IClassesStudents;
   date: Date;
   status: string; //Presente,Ausente
   details_status?: string; //<- Caso seja “Ausente”, sera necessário de informar se a ausência eh justificada.
 }
 
-interface IFincances {
-  id_student: IStudent;
-  id_classes: IClasses;
+interface IFinances {
+  id_frequency: IFrequency;
   payment_status: string; //Aberto, Fechado e Cancelado
   payment_type: string; //Entrada ou saida
   payment_date: Date;
   payment_amount: number;
 }
 
-export { IClasses, IFincances, IStudent, IUser, IFrequency, ICourses };
+export {
+  IClasses,
+  IFinances,
+  IStudent,
+  IUser,
+  IFrequency,
+  ICourses,
+  IClassesStudents,
+};

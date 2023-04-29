@@ -1,5 +1,5 @@
 import { Finances, Student } from '../database/schemas';
-import { IFincances } from '../types/SchemaTypes';
+import { IFinances } from '../types/SchemaTypes';
 
 class FinanceModel {
   async getAllFinances() {
@@ -12,7 +12,7 @@ class FinanceModel {
     }
   }
 
-  async createFinance(data: IFincances) {
+  async createFinance(data: IFinances) {
     try {
       const newFinance = await Finances.create(data);
       return newFinance;
@@ -21,7 +21,7 @@ class FinanceModel {
     }
   }
 
-  async updateFinance(data: IFincances, id: string) {
+  async updateFinance(data: IFinances, id: string) {
     try {
       const updateFinance = await Finances.updateOne(
         {

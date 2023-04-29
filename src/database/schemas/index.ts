@@ -2,10 +2,11 @@ import { model, Schema } from 'mongoose';
 import {
   IClasses,
   ICourses,
-  IFincances,
+  IFinances,
   IFrequency,
   IStudent,
   IUser,
+  IClassesStudents,
 } from '../../types/SchemaTypes';
 import bcrypt from 'bcryptjs';
 
@@ -20,7 +21,6 @@ const UserSchema = new Schema<IUser>(
     password: {
       type: String,
       required: true,
-      // select: false,
     },
     role: {
       type: String,
@@ -52,9 +52,8 @@ const StudentSchema = new Schema<IStudent>(
   { timestamps: true },
 );
 const ClassesSchemas = new Schema<IClasses>({
-  id_students: {
-    type: Schema.Types.ObjectId,
-    ref: 'Students',
+  name: {
+    type: String,
   },
   start_date: {
     type: Date,
@@ -67,9 +66,19 @@ const ClassesSchemas = new Schema<IClasses>({
     type: Schema.Types.ObjectId,
     ref: 'Courses',
   },
+});
+
+const ClassesStudentsSchema = new Schema<IClassesStudents>({
   id_classes: {
+    type: Schema.Types.ObjectId,
+    ref: 'Classes',
+  },
+  id_student: {
+    type: Schema.Types.ObjectId,
+    ref: 'Student',
+  },
+  amount_class: {
     type: Number,
-    required: true,
   },
 });
 
@@ -84,13 +93,9 @@ const CoursesSchema = new Schema<ICourses>({
 });
 
 const FrequencySchemas = new Schema<IFrequency>({
-  id_classes: {
+  id_Classes_Students: {
     type: Schema.Types.ObjectId,
-    ref: 'Classes',
-  },
-  id_student: {
-    type: Schema.Types.ObjectId,
-    ref: 'Student',
+    ref: 'ClassesStudents',
   },
   date: {
     type: Date,
@@ -105,14 +110,10 @@ const FrequencySchemas = new Schema<IFrequency>({
   },
 });
 
-const FinanceSchemas = new Schema<IFincances>({
-  id_student: {
+const FinanceSchemas = new Schema<IFinances>({
+  id_frequency: {
     type: Schema.Types.ObjectId,
-    ref: 'Student',
-  },
-  id_classes: {
-    type: Schema.Types.ObjectId,
-    ref: 'Classes',
+    ref: 'Frequency',
   },
   payment_date: {
     type: Date,
@@ -126,10 +127,11 @@ const FinanceSchemas = new Schema<IFincances>({
   payment_type: {
     type: String,
     enum: ['Entrada', 'Saída'],
+    default: 'Entrada',
   },
   payment_amount: {
     type: Number,
-    required: true,
+    default: 0,
   },
 });
 
@@ -143,6 +145,18 @@ const Student = model<IStudent>('Student', StudentSchema);
 const Courses = model<ICourses>('Courses', CoursesSchema);
 const Classes = model<IClasses>('Classes', ClassesSchemas);
 const Frequency = model<IFrequency>('Frequency', FrequencySchemas);
-const Finances = model<IFincances>('Finances', FinanceSchemas);
+const Finances = model<IFinances>('Finances', FinanceSchemas);
+const ClassesStudents = model<IClassesStudents>(
+  'ClassesStudents',
+  ClassesStudentsSchema,
+);
 
-export { User, Student, Courses, Classes, Frequency, Finances };
+export {
+  User,
+  Student,
+  Courses,
+  Classes,
+  Frequency,
+  Finances,
+  ClassesStudents,
+};

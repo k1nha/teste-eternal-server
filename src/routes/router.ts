@@ -6,6 +6,7 @@ import StudentController from '../controllers/StudentController';
 import FinanceController from '../controllers/FinanceController';
 import CoursesController from '../controllers/CoursesController';
 import FrequencyController from '../controllers/FrequencyController';
+import ClassesStudentsController from '../controllers/ClassesStudentsController';
 
 const router = Router();
 const Auth = new AuthController();
@@ -14,6 +15,7 @@ const Classes = new ClassesController();
 const Courses = new CoursesController();
 const Finances = new FinanceController();
 const Frequency = new FrequencyController();
+const ClassesStudents = new ClassesStudentsController();
 
 // User
 router.post('/auth/register', Auth.create);
@@ -66,10 +68,16 @@ router.delete('/api/frequency', Frequency.delete);
 
 router.get('/api/finances', Finances.getAll);
 
-router.post('/api/finances');
+router.post('/api/finances', Finances.create);
 
-router.put('/api/finances');
+router.put('/api/finances', Finances.update);
 
-router.delete('/api/finances');
+router.delete('/api/finances', Finances.delete);
+
+// ClassesStudents
+
+router.get('/api/classesstudents', ClassesStudents.getAll);
+
+router.post('/api/classesstudents');
 
 export default router;
