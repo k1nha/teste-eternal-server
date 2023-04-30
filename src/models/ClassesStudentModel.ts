@@ -20,6 +20,14 @@ class ClassesStudentsModel {
   }
   async createClassesStudent(data: IClassesStudents) {
     try {
+      // const studentInClasses = await ClassesStudents.find()
+      //   .populate('id_student')
+      //   .select({ _id: data.id_student });
+
+      // if (studentInClasses) {
+      //   return 'This student is already in class';
+      // }
+
       const createdClassesStudents = await ClassesStudents.create(data);
 
       return createdClassesStudents;

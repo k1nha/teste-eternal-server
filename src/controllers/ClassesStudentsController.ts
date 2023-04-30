@@ -18,6 +18,18 @@ class ClassesStudentsController {
       return res.status(500).json({ error: err });
     }
   }
+
+  async create(req: Request, res: Response) {
+    try {
+      const body = req.body;
+
+      const createdClassesStudents = await makeSut().createClassesStudent(body);
+
+      return res.status(201).json({ message: createdClassesStudents });
+    } catch (err) {
+      return res.status(500).json({ error: err });
+    }
+  }
 }
 
 export default ClassesStudentsController;

@@ -60,9 +60,9 @@ router.get('/api/frequency', Frequency.getAll);
 
 router.post('/api/frequency', Frequency.create);
 
-router.put('/api/frequency', Frequency.update);
+router.put('/api/frequency:id', Frequency.update);
 
-router.delete('/api/frequency', Frequency.delete);
+router.delete('/api/frequency/:id', Frequency.delete);
 
 // Finances
 
@@ -70,14 +70,14 @@ router.get('/api/finances', Finances.getAll);
 
 router.post('/api/finances', Finances.create);
 
-router.put('/api/finances', Finances.update);
+router.put('/api/finances/:id', Finances.update);
 
-router.delete('/api/finances', Finances.delete);
+router.delete('/api/finances/:id', Finances.delete);
 
 // ClassesStudents
 
 router.get('/api/classesstudents', ClassesStudents.getAll);
 
-router.post('/api/classesstudents');
+router.post('/api/classesstudents', ClassesStudents.create);
 
 export default router;

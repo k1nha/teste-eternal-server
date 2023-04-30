@@ -99,7 +99,6 @@ const FrequencySchemas = new Schema<IFrequency>({
   },
   date: {
     type: Date,
-    default: Date.now,
   },
   status: {
     type: String,

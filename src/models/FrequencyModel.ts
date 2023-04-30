@@ -4,9 +4,19 @@ import { IFrequency } from '../types/SchemaTypes';
 class FrequencyModel {
   async getAllFrequency() {
     try {
-      const allFrequency = await Frequency.find().populate(
-        'id_Classes_Students',
-      );
+      const allFrequency = await Frequency.find().populate({
+        path: 'id_Classes_Students',
+        populate: [
+          {
+            path: 'id_classes',
+            model: 'Classes',
+          },
+          {
+            path: 'id_student',
+            model: 'Student',
+          },
+        ],
+      });
       return allFrequency;
     } catch (err) {
       console.error(err);

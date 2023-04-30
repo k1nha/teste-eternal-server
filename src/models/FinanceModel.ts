@@ -4,7 +4,23 @@ import { IFinances } from '../types/SchemaTypes';
 class FinanceModel {
   async getAllFinances() {
     try {
-      const allFinances = await Finances.find();
+      const allFinances = await Finances.find().populate({
+        path: 'id_frequency',
+        populate: {
+          path: 'id_Classes_Students',
+          model: 'ClassesStudents',
+          populate: [
+            {
+              path: 'id_student',
+              model: 'Student',
+            },
+            {
+              path: 'id_classes',
+              model: 'Classes',
+            },
+          ],
+        },
+      });
 
       return allFinances;
     } catch (err) {
